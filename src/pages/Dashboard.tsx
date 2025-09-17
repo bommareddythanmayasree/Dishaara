@@ -6,14 +6,20 @@ import { EventsPage } from "@/components/EventsPage";
 import { SafetyPage } from "@/components/SafetyPage";
 import { ProfilePage } from "@/components/ProfilePage";
 import { VehiclesPage } from "@/components/VehiclesPage";
+import { AdminDashboard } from "@/components/admin/AdminDashboard";
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("home");
+  const [showAdmin, setShowAdmin] = useState(false);
+
+  if (showAdmin) {
+    return <AdminDashboard onBack={() => setShowAdmin(false)} />;
+  }
 
   const renderContent = () => {
     switch (activeTab) {
       case "home":
-        return <HomePage onNavigate={setActiveTab} />;
+        return <HomePage onNavigate={setActiveTab} onAdminAccess={() => setShowAdmin(true)} />;
       case "guides":
         return <GuidesPage />;
       case "events":
