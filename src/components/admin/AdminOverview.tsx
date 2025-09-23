@@ -36,15 +36,15 @@ export function AdminOverview() {
         <Card className="border-l-4 border-l-primary">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center justify-between text-sm font-medium">
-              Daily Active Users
+              Total Users
               <Users className="w-4 h-4 text-primary" />
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">12,847</div>
+            <div className="text-2xl font-bold">45,283</div>
             <p className="text-xs text-muted-foreground flex items-center">
               <TrendingUp className="w-3 h-3 mr-1 text-green-500" />
-              +12.3% from yesterday
+              +12.3% from last month
             </p>
           </CardContent>
         </Card>
@@ -52,15 +52,15 @@ export function AdminOverview() {
         <Card className="border-l-4 border-l-blue-500">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center justify-between text-sm font-medium">
-              Total Bookings
-              <Calendar className="w-4 h-4 text-blue-500" />
+              Active Guides
+              <Users className="w-4 h-4 text-blue-500" />
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">3,421</div>
+            <div className="text-2xl font-bold">1,247</div>
             <p className="text-xs text-muted-foreground flex items-center">
               <TrendingUp className="w-3 h-3 mr-1 text-green-500" />
-              +8.7% from yesterday
+              +8.7% verified guides
             </p>
           </CardContent>
         </Card>
@@ -68,31 +68,74 @@ export function AdminOverview() {
         <Card className="border-l-4 border-l-green-500">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center justify-between text-sm font-medium">
-              Revenue (INR)
-              <IndianRupee className="w-4 h-4 text-green-500" />
+              Total Bookings
+              <Calendar className="w-4 h-4 text-green-500" />
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">₹4,23,890</div>
+            <div className="text-2xl font-bold">23,156</div>
             <p className="text-xs text-muted-foreground flex items-center">
               <TrendingUp className="w-3 h-3 mr-1 text-green-500" />
-              +15.2% from yesterday
+              +18.5% this month
             </p>
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-orange-500">
+        <Card className="border-l-4 border-l-purple-500">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center justify-between text-sm font-medium">
-              SOS Alerts
-              <Shield className="w-4 h-4 text-orange-500" />
+              Revenue (INR)
+              <IndianRupee className="w-4 h-4 text-purple-500" />
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-600">3</div>
-            <p className="text-xs text-muted-foreground">
-              2 resolved, 1 active
+            <div className="text-2xl font-bold">₹12,45,890</div>
+            <p className="text-xs text-muted-foreground flex items-center">
+              <TrendingUp className="w-3 h-3 mr-1 text-green-500" />
+              +25.2% growth
             </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Booking Trends</CardTitle>
+            <CardDescription>Monthly bookings over time</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-64 flex items-center justify-center bg-muted/20 rounded-lg">
+              <p className="text-muted-foreground">Bookings Chart (Integration needed)</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Popular Destinations</CardTitle>
+            <CardDescription>Top visited spots this month</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Goa Beaches</span>
+                <Badge variant="secondary">2,341 visits</Badge>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Rajasthan Desert</span>
+                <Badge variant="secondary">1,892 visits</Badge>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Kerala Backwaters</span>
+                <Badge variant="secondary">1,654 visits</Badge>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Himachal Treks</span>
+                <Badge variant="secondary">1,234 visits</Badge>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>

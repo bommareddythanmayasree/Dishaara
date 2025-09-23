@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { AdminSidebar } from "./AdminSidebar";
 import { AdminOverview } from "./AdminOverview";
-import { AdminGuides } from "./AdminGuides";
-import { AdminLiveMap } from "./AdminLiveMap";
-import { AdminPooling } from "./AdminPooling";
-import { AdminOffers } from "./AdminOffers";
-import { AdminEvents } from "./AdminEvents";
-import { AdminRewards } from "./AdminRewards";
-import { AdminReviews } from "./AdminReviews";
 import { AdminUsers } from "./AdminUsers";
-import { AdminPayments } from "./AdminPayments";
+import { AdminGuides } from "./AdminGuides";
+import { AdminVehicles } from "./AdminVehicles";
+import { AdminOffers } from "./AdminOffers";
+import { AdminRewards } from "./AdminRewards";
+import { AdminEvents } from "./AdminEvents";
+import { AdminReviews } from "./AdminReviews";
 import { AdminSafety } from "./AdminSafety";
+import { AdminReports } from "./AdminReports";
 import { AdminNotifications } from "./AdminNotifications";
 import { AdminAudit } from "./AdminAudit";
 import { AdminSettings } from "./AdminSettings";
@@ -29,26 +28,24 @@ export function AdminDashboard({ onBack }: AdminDashboardProps) {
     switch (activeModule) {
       case "overview":
         return <AdminOverview />;
-      case "guides":
-        return <AdminGuides />;
-      case "live-map":
-        return <AdminLiveMap />;
-      case "pooling":
-        return <AdminPooling />;
-      case "offers":
-        return <AdminOffers />;
-      case "events":
-        return <AdminEvents />;
-      case "rewards":
-        return <AdminRewards />;
-      case "reviews":
-        return <AdminReviews />;
       case "users":
         return <AdminUsers />;
-      case "payments":
-        return <AdminPayments />;
+      case "guides":
+        return <AdminGuides />;
+      case "vehicles":
+        return <AdminVehicles />;
+      case "offers":
+        return <AdminOffers />;
+      case "rewards":
+        return <AdminRewards />;
+      case "events":
+        return <AdminEvents />;
+      case "reviews":
+        return <AdminReviews />;
       case "safety":
         return <AdminSafety />;
+      case "reports":
+        return <AdminReports />;
       case "notifications":
         return <AdminNotifications />;
       case "audit":
