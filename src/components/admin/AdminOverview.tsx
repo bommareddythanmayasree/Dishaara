@@ -1,6 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, LineChart, Line, PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { 
   Users, 
   Car, 
@@ -13,6 +15,46 @@ import {
   Clock,
   AlertTriangle
 } from "lucide-react";
+
+// Sample data for charts
+const monthlyRevenueData = [
+  { month: "Jan", revenue: 245000, users: 1240 },
+  { month: "Feb", revenue: 287000, users: 1456 },
+  { month: "Mar", revenue: 342000, users: 1789 },
+  { month: "Apr", revenue: 398000, users: 2134 },
+  { month: "May", revenue: 456000, users: 2567 },
+  { month: "Jun", revenue: 523000, users: 2890 },
+];
+
+const categoryDistribution = [
+  { name: "Bookings", value: 45, color: "hsl(var(--primary))" },
+  { name: "Hotels", value: 25, color: "hsl(var(--secondary))" },
+  { name: "Guides", value: 20, color: "hsl(217, 91%, 60%)" },
+  { name: "Events", value: 10, color: "hsl(142, 69%, 58%)" },
+];
+
+const growthTrendsData = [
+  { month: "Jan", bookings: 2400, revenue: 245000, users: 1240 },
+  { month: "Feb", bookings: 2800, revenue: 287000, users: 1456 },
+  { month: "Mar", bookings: 3200, revenue: 342000, users: 1789 },
+  { month: "Apr", bookings: 3800, revenue: 398000, users: 2134 },
+  { month: "May", bookings: 4200, revenue: 456000, users: 2567 },
+  { month: "Jun", bookings: 4800, revenue: 523000, users: 2890 },
+];
+
+const heatmapData = [
+  { location: "Mumbai", morning: 85, afternoon: 120, evening: 95, night: 45 },
+  { location: "Delhi", morning: 78, afternoon: 110, evening: 88, night: 40 },
+  { location: "Goa", morning: 65, afternoon: 95, evening: 125, night: 60 },
+  { location: "Bangalore", morning: 72, afternoon: 105, evening: 82, night: 35 },
+  { location: "Jaipur", morning: 55, afternoon: 80, evening: 70, night: 30 },
+];
+
+const chartConfig = {
+  revenue: { label: "Revenue (₹)", color: "hsl(var(--primary))" },
+  users: { label: "Users", color: "hsl(217, 91%, 60%)" },
+  bookings: { label: "Bookings", color: "hsl(142, 69%, 58%)" },
+};
 
 export function AdminOverview() {
   return (
@@ -100,41 +142,149 @@ export function AdminOverview() {
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Monthly Revenue & User Sign-ups Bar Chart */}
         <Card>
           <CardHeader>
-            <CardTitle>Booking Trends</CardTitle>
-            <CardDescription>Monthly bookings over time</CardDescription>
+            <CardTitle>Monthly Revenue & User Growth</CardTitle>
+            <CardDescription>Revenue in INR and new user registrations</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-64 flex items-center justify-center bg-muted/20 rounded-lg">
-              <p className="text-muted-foreground">Bookings Chart (Integration needed)</p>
-            </div>
+            <ChartContainer config={chartConfig} className="h-64">
+              <BarChart data={monthlyRevenueData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis yAxisId="left" orientation="left" />
+                <YAxis yAxisId="right" orientation="right" />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <ChartLegend content={<ChartLegendContent />} />
+                <Bar yAxisId="left" dataKey="revenue" fill="var(--color-revenue)" name="Revenue (₹)" />
+                <Bar yAxisId="right" dataKey="users" fill="var(--color-users)" name="New Users" />
+              </BarChart>
+            </ChartContainer>
           </CardContent>
         </Card>
 
+        {/* Category Distribution Pie Chart */}
         <Card>
           <CardHeader>
-            <CardTitle>Popular Destinations</CardTitle>
-            <CardDescription>Top visited spots this month</CardDescription>
+            <CardTitle>Booking Distribution</CardTitle>
+            <CardDescription>Category-wise booking breakdown</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Goa Beaches</span>
-                <Badge variant="secondary">2,341 visits</Badge>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Rajasthan Desert</span>
-                <Badge variant="secondary">1,892 visits</Badge>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Kerala Backwaters</span>
-                <Badge variant="secondary">1,654 visits</Badge>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Himachal Treks</span>
-                <Badge variant="secondary">1,234 visits</Badge>
-              </div>
+            <ChartContainer config={chartConfig} className="h-64">
+              <PieChart>
+                <Pie
+                  data={categoryDistribution}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {categoryDistribution.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <ChartTooltip content={<ChartTooltipContent />} />
+              </PieChart>
+            </ChartContainer>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Growth Trends & Heatmap */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Growth Trends Line Chart */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Overall Growth Trends</CardTitle>
+            <CardDescription>Bookings, revenue, and user growth over time</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ChartContainer config={chartConfig} className="h-64">
+              <LineChart data={growthTrendsData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <ChartLegend content={<ChartLegendContent />} />
+                <Line type="monotone" dataKey="bookings" stroke="var(--color-bookings)" strokeWidth={2} />
+                <Line type="monotone" dataKey="users" stroke="var(--color-users)" strokeWidth={2} />
+              </LineChart>
+            </ChartContainer>
+          </CardContent>
+        </Card>
+
+        {/* User Activity Heatmap */}
+        <Card>
+          <CardHeader>
+            <CardTitle>User Activity Heatmap</CardTitle>
+            <CardDescription>Activity levels by location and time of day</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {heatmapData.map((location) => (
+                <div key={location.location} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium">{location.location}</span>
+                    <span className="text-xs text-muted-foreground">
+                      Peak: {Math.max(location.morning, location.afternoon, location.evening, location.night)} users
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-4 gap-1">
+                    <div className="text-center">
+                      <div 
+                        className="h-8 rounded flex items-center justify-center text-xs font-medium"
+                        style={{ 
+                          backgroundColor: `hsl(var(--primary) / ${location.morning / 150})`,
+                          color: location.morning > 75 ? 'white' : 'hsl(var(--foreground))'
+                        }}
+                      >
+                        {location.morning}
+                      </div>
+                      <span className="text-xs text-muted-foreground">Morning</span>
+                    </div>
+                    <div className="text-center">
+                      <div 
+                        className="h-8 rounded flex items-center justify-center text-xs font-medium"
+                        style={{ 
+                          backgroundColor: `hsl(var(--primary) / ${location.afternoon / 150})`,
+                          color: location.afternoon > 75 ? 'white' : 'hsl(var(--foreground))'
+                        }}
+                      >
+                        {location.afternoon}
+                      </div>
+                      <span className="text-xs text-muted-foreground">Afternoon</span>
+                    </div>
+                    <div className="text-center">
+                      <div 
+                        className="h-8 rounded flex items-center justify-center text-xs font-medium"
+                        style={{ 
+                          backgroundColor: `hsl(var(--primary) / ${location.evening / 150})`,
+                          color: location.evening > 75 ? 'white' : 'hsl(var(--foreground))'
+                        }}
+                      >
+                        {location.evening}
+                      </div>
+                      <span className="text-xs text-muted-foreground">Evening</span>
+                    </div>
+                    <div className="text-center">
+                      <div 
+                        className="h-8 rounded flex items-center justify-center text-xs font-medium"
+                        style={{ 
+                          backgroundColor: `hsl(var(--primary) / ${location.night / 150})`,
+                          color: location.night > 75 ? 'white' : 'hsl(var(--foreground))'
+                        }}
+                      >
+                        {location.night}
+                      </div>
+                      <span className="text-xs text-muted-foreground">Night</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </CardContent>
         </Card>
