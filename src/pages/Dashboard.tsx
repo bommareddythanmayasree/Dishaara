@@ -15,11 +15,29 @@ export default function Dashboard() {
   const [showGuidePortal, setShowGuidePortal] = useState(false);
 
   if (showAdmin) {
-    return <AdminDashboard onBack={() => setShowAdmin(false)} />;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center p-4">
+        <div className="w-full max-w-[430px] min-h-screen bg-background shadow-2xl rounded-3xl overflow-hidden border-8 border-slate-800 relative">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-6 bg-slate-800 rounded-b-2xl z-50"></div>
+          <div className="h-full overflow-y-auto">
+            <AdminDashboard onBack={() => setShowAdmin(false)} />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (showGuidePortal) {
-    return <GuideDashboard onBack={() => setShowGuidePortal(false)} />;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center p-4">
+        <div className="w-full max-w-[430px] min-h-screen bg-background shadow-2xl rounded-3xl overflow-hidden border-8 border-slate-800 relative">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-6 bg-slate-800 rounded-b-2xl z-50"></div>
+          <div className="h-full overflow-y-auto">
+            <GuideDashboard onBack={() => setShowGuidePortal(false)} />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   const renderContent = () => {
@@ -46,11 +64,16 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-20">
-      <main className="max-w-md mx-auto">
-        {renderContent()}
-      </main>
-      <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center p-4">
+      <div className="w-full max-w-[430px] min-h-screen bg-background shadow-2xl rounded-3xl overflow-hidden border-8 border-slate-800 relative">
+        {/* Phone notch */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-6 bg-slate-800 rounded-b-2xl z-50"></div>
+        
+        <main className="h-full overflow-y-auto pb-20">
+          {renderContent()}
+        </main>
+        <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+      </div>
     </div>
   );
 }
