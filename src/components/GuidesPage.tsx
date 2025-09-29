@@ -3,6 +3,7 @@ import { Search, Filter, MapPin, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TourGuideCard } from "@/components/TourGuideCard";
+import { GuideInterface } from "@/components/GuideInterface";
 import { useToast } from "@/hooks/use-toast";
 
 const mockGuides = [
@@ -47,6 +48,7 @@ const mockGuides = [
 export function GuidesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("current");
+  const [showGuideInterface, setShowGuideInterface] = useState(false);
   const { toast } = useToast();
 
   const handleBookGuide = (guideId: string) => {
@@ -56,6 +58,25 @@ export function GuidesPage() {
       description: `Your request to book ${guide?.name} has been sent. You'll be connected shortly!`,
     });
   };
+
+  const handleViewGuideProfile = (guideId: string) => {
+    setShowGuideInterface(true);
+  };
+
+  if (showGuideInterface) {
+    return (
+      <div className="relative">
+        <Button 
+          variant="ghost" 
+          className="absolute top-4 left-4 z-10"
+          onClick={() => setShowGuideInterface(false)}
+        >
+          ← Back to Guides
+        </Button>
+        <GuideInterface />
+      </div>
+    );
+  }
 
   const filteredGuides = mockGuides.filter(guide =>
     guide.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -111,11 +132,20 @@ export function GuidesPage() {
 
         <div className="space-y-4">
           {filteredGuides.map((guide) => (
-            <TourGuideCard
-              key={guide.id}
-              guide={guide}
-              onBook={handleBookGuide}
-            />
+            <div key={guide.id} className="relative">
+              <TourGuideCard
+                guide={guide}
+                onBook={handleBookGuide}
+              />
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="absolute top-4 right-4"
+                onClick={() => handleViewGuideProfile(guide.id)}
+              >
+                View Profile
+              </Button>
+            </div>
           ))}
         </div>
       </div>
