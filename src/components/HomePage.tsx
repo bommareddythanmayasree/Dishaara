@@ -7,9 +7,10 @@ import heroImg from "@/assets/hero-tourism.jpg";
 interface HomePageProps {
   onNavigate: (tab: string) => void;
   onAdminAccess?: () => void;
+  onGuideAccess?: () => void;
 }
 
-export function HomePage({ onNavigate, onAdminAccess }: HomePageProps) {
+export function HomePage({ onNavigate, onAdminAccess, onGuideAccess }: HomePageProps) {
   const quickActions = [
     { 
       id: "guides", 
@@ -86,16 +87,28 @@ export function HomePage({ onNavigate, onAdminAccess }: HomePageProps) {
               <MapPin className="w-4 h-4 mr-1" />
               <span className="text-sm">Currently in Delhi</span>
             </div>
-            {onAdminAccess && (
-              <Button
-                onClick={onAdminAccess}
-                variant="secondary"
-                size="sm"
-                className="text-xs"
-              >
-                Admin
-              </Button>
-            )}
+            <div className="flex gap-2">
+              {onGuideAccess && (
+                <Button
+                  onClick={onGuideAccess}
+                  variant="secondary"
+                  size="sm"
+                  className="text-xs"
+                >
+                  Guide Portal
+                </Button>
+              )}
+              {onAdminAccess && (
+                <Button
+                  onClick={onAdminAccess}
+                  variant="secondary"
+                  size="sm"
+                  className="text-xs"
+                >
+                  Admin
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>

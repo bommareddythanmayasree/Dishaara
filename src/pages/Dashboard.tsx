@@ -7,19 +7,29 @@ import { SafetyPage } from "@/components/SafetyPage";
 import { ProfilePage } from "@/components/ProfilePage";
 import { VehiclesPage } from "@/components/VehiclesPage";
 import { AdminDashboard } from "@/components/admin/AdminDashboard";
+import { GuideDashboard } from "@/components/guide/GuideDashboard";
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("home");
   const [showAdmin, setShowAdmin] = useState(false);
+  const [showGuidePortal, setShowGuidePortal] = useState(false);
 
   if (showAdmin) {
     return <AdminDashboard onBack={() => setShowAdmin(false)} />;
   }
 
+  if (showGuidePortal) {
+    return <GuideDashboard onBack={() => setShowGuidePortal(false)} />;
+  }
+
   const renderContent = () => {
     switch (activeTab) {
       case "home":
-        return <HomePage onNavigate={setActiveTab} onAdminAccess={() => setShowAdmin(true)} />;
+        return <HomePage 
+          onNavigate={setActiveTab} 
+          onAdminAccess={() => setShowAdmin(true)}
+          onGuideAccess={() => setShowGuidePortal(true)}
+        />;
       case "guides":
         return <GuidesPage />;
       case "events":
